@@ -1,0 +1,790 @@
+:root {
+    --primary: #b6895b;
+    --bg: #010101;
+
+}
+
+/* all selector */
+* {
+
+    margin: 0;
+    padding: 0;
+
+    /* agar tidak perlu mengatur kembali dimensi elemen saat diberi padding etc */
+    box-sizing: border-box;
+
+    /* berguna saat ngasih style utk form atw button */
+    outline: none;
+    border: none;
+
+    /* supaya tdk ada garis bwh ketika bikin link */
+    text-decoration: none;
+
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+
+    /* cara manggil variable yg kita set di root */
+    background-color: var(--bg);
+    color: #fff;
+    /* min-height: 5000px; */
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 7%;
+    background-color: rgba(1, 1, 1, 0.8);
+    border-bottom: 1px solid #513c28;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+}
+
+.navbar img {
+    width: 70px; /* Ukuran gambar logo */
+    height: 70px;
+    border-radius: 70%; /* Membuat logo berbentuk bulat */
+    margin-right: 5px; /* Jarak antara logo dan teks */
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center; /* Membuat teks sejajar dengan logo */
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    font-style: italic;
+    text-decoration: none; /* Menghilangkan garis bawah pada link */
+}
+
+.navbar-logo span {
+    color: var(--primary);
+    margin-right: 5px;
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav a {
+    color: #fff;
+    font-size: 1.4rem;
+    margin: 0 1rem;
+    text-decoration: none;
+}
+
+.navbar-nav a:hover {
+    color: var(--primary);
+}
+
+.navbar-nav a::after {
+    content: '';
+    display: block;
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1rem solid var(--primary);
+    transform: scaleX(0);
+    transition: 0.2s linear;
+}
+
+.navbar-nav a:hover::after {
+    transform: scaleX(0.5);
+}
+
+.navbar-extra a {
+    color: #fff;
+    margin: 0 0.5rem;
+}
+
+.navbar-extra a:hover {
+    color: var(--primary);
+}
+
+
+#hamburger-menu{
+    display: none;
+}
+
+/* Hero section */
+.hero{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image: url('../img/index.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    position: relative;
+}
+
+
+
+.hero::after{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 30%;
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(1,1,3,1)8%, rgba(255,255,255,0) 50%);
+}
+
+.hero .content{
+    text-align: center;
+    padding: 1.4rem 7%;
+    max-width: 60rem;
+}
+
+.hero .content h1{
+    margin-bottom: 20px;
+    font-size: 5em;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
+    line-height: 1.2;
+}
+
+.hero .content h1 span{
+    color: var(--primary);
+}
+
+.hero .content p{
+    font-size: 1.6rem;
+    margin-top: 1rem;
+    line-height: 1.4;
+    font-weight: 100;
+    text-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
+    mix-blend-mode: difference;
+}
+
+.hero .content .cta{
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.4rem;
+    color: #fff;
+    background-color: var(--primary);
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 3px rgba(1, 1, 3, 0.5);
+}
+
+
+/* About Section */
+.about, .menu, .contact{
+    padding: 8rem 7% 1.4rem;
+}
+
+.about h2, .menu h2, .contact h2, .contact h2{
+    text-align: center;
+    font-size: 2.6rem;
+    margin-bottom: 3rem;
+}
+
+.about h2 span, .menu h2 span, .contact h2 span{
+    color: var(--primary);
+}
+
+
+.about .row{
+    display: flex;
+}
+
+.about .row .about-img{
+    flex: 1 1 45rem;
+}
+
+.about .row .about-img img{
+    width: 100%;
+}
+
+.about .row .content{
+    flex: 1 1 35rem;
+    padding: 0 1rem;
+}
+
+.about .row .content h3{
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.about .row .content p{
+    margin-bottom: 0.8rem;
+    font-size: 1.4rem;
+    font-weight: 100;
+    line-height: 1.6;
+}
+
+/* Menu section */
+
+.menu h2, .contact h2{
+    margin-bottom: 1rem;
+}
+
+.menu p, .contact p{
+    text-align: center;
+    max-width: 30rem;
+    margin: auto;
+    font-weight: 100;
+    line-height: 1.6rem;
+}
+
+.menu .row{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5rem;
+    justify-content: center;
+}
+
+.menu .row .menu-card{
+    text-align: center;
+    padding-bottom: 4rem;
+}
+
+.menu .row .menu-card img{
+    border-radius: 50%;
+    width: 80%;
+}
+
+.menu .row .menu-card .menu-card-title{
+    margin: 1rem auto 0.5rem;
+}
+
+/* Contact Section */
+.contact .row{
+    display: flex;
+    margin-top: 2rem;
+    background-color: #222;
+    flex-wrap: wrap;
+}
+
+.contact .row .map{
+    flex: 1 1 45rem;
+    width: 100%;
+    object-fit: cover;
+}
+
+.contact .row form{
+    flex: 1 1 45rem;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.contact .row form .input-group{
+    display: flex;
+    align-items: center;
+    margin-top: 2rem;
+    background-color: var(--bg);
+    border: 1px solid #eee;
+    padding-left: 2rem;
+}
+
+.contact .row form .input-group input{
+    width: 100%;
+    padding: 2rem;
+    font-size: 1.7rem;
+    background: none;
+    color: #fff;
+}
+
+.contact .row form .btn{
+    margin-top: 3rem;
+    display: inline-block;
+    padding: 1rem 3rem;
+    font-size: 1.7rem;
+    color: #fff;
+    background-color: var(--primary);
+    cursor: pointer;
+
+}
+
+/* Footer */
+footer{
+    background-color: var(--primary);
+    text-align: center;
+    padding: 1rem 0 3rem;
+    margin-top: 3rem;
+}
+
+footer .socials{
+    padding: 1rem 0;
+
+}
+
+footer .socials a{
+    color: #fff;
+    margin: 1rem;
+}
+
+footer .socials a:hover, footer .links a:hover{
+    color: var(--bg);
+}
+
+footer .links a{
+    color: #fff;
+    padding: 0.7rem 1rem;
+}
+
+footer .links {
+    margin-bottom: 1.4rem;
+}
+
+footer .credit{
+    font-size: 0.8rem;
+}
+
+footer .credit a{
+    color: var(--bg);
+    font-weight: 700;
+}
+
+
+
+/* Media Queries */
+
+
+/* Laptop */
+@media(max-width : 1366px){
+    html{
+        font-size: 75%;
+    }
+
+}
+
+/* Tablet */
+@media(max-width : 768px){
+    html{
+        font-size: 62.5%;
+    }
+    #hamburger-menu{
+        display: inline-block;
+    }
+    .navbar .navbar-nav{
+        position: absolute;
+        top: 100%;
+        right: -100%;
+        background-color: #fff;
+        width: 30rem;
+        height: 100vh;
+        transition: 0.3s;
+    }
+    .navbar .navbar-nav.active{
+        right: 0;
+
+    }
+    .navbar .navbar-nav a{
+        color: var(--bg);
+        display: block;
+        margin: 1.5rem;
+        padding: 0.5rem;
+        font-size: 2rem;
+    }
+
+    .navbar .navbar-nav a::after{
+        transform-origin: 0 0 ;
+    }
+
+    .navbar .navbar-nav a:hover::after{
+        transform: scaleX(0.2);
+    }
+
+    .about .row{
+        flex-wrap: wrap;
+    }
+
+    .about .row .about-img img{
+        height: 24rem;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .about .row .content{
+        padding: 0;
+    }
+
+    .about .row .content h3{
+        margin-top: 1rem;
+        font-size: 2rem;
+    }
+
+    .about .row .content p{
+        font-size: 1.6rem;
+    }
+
+    .menu p{
+        font-size: 1.2rem;
+    }
+
+    .contact .row{
+        flex-wrap: wrap;
+    }
+
+    .contact .row .map{
+        height: 30rem;
+    }
+
+    .contact .row form{
+        padding-top: 0;
+    }
+}
+
+/* Mobile */
+@media(max-width : 450px){
+    html{
+        font-size: 55%;
+    }
+
+}
+
+.sistem-belajar {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: 30px auto;
+    padding: 30px;
+    max-width: 800px;
+    transition: transform 0.3s;
+}
+
+.sistem-belajar:hover {
+    transform: scale(1.02); /* Efek zoom saat hover pada seluruh section */
+}
+
+.sistem-belajar h2 {
+    text-align: center;
+    color: #ad9a67; /* Warna biru cerah */
+    font-size: 28px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.sistem-belajar h2 span {
+    color: #554728; /* Warna aksen */
+    font-weight: bold;
+}
+
+.sistem-belajar .content ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sistem-belajar .content li {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    margin: 15px 0;
+    padding: 20px;
+    position: relative;
+    transition: background-color 0.3s, transform 0.3s;
+    overflow: hidden; /* Untuk efek animasi */
+}
+
+.sistem-belajar .content li:hover {
+    background-color: #18202c; /* Warna biru muda saat hover */
+    transform: translateY(-3px); /* Efek angkat saat hover */
+}
+
+.sistem-belajar .content li:before {
+    content: '';
+    position: absolute;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.sistem-belajar .content li strong {
+    color: #b6895b;
+    font-size: 16px;
+}
+
+.sistem-belajar .content li ul {
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.sistem-belajar .content li ul li {
+    background-color: #000000;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.sistem-belajar .content li ul li:hover {
+    background-color: #b6895b; /* Warna latar belakang saat hover */
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    background: linear-gradient(to right, #4d3300, #b4955a);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: black; /* Fallback untuk browser yang tidak mendukung */
+}
+
+/* Gaya untuk bagian jadwal */
+.jadwal-belajar {
+    width: 80%;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Gaya tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* Gaya header tabel */
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Gaya sel tabel */
+td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: center;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Gaya hover pada baris tabel */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Gaya link kembali */
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    background: #fff;
+    border: 2px solid #4CAF50;
+    transition: 0.3s ease;
+}
+
+.back-link:hover {
+    background: #4CAF50;
+    color: white;
+}
+
+.private-class {
+    background-color: #f9f9f9; /* Warna latar belakang */
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    border-top: 2px solid #4CAF50;
+}
+
+/* Efek hover untuk Private Class */
+.private-class:hover {
+    background-color: #e8f5e9;
+}
+
+.jadwal-belajar {
+    width: 80%;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Gaya tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* Gaya header tabel */
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Gaya sel tabel */
+td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: center;
+    background-color: #fff;
+    color: #333;
+}
+
+.kelas-belajar {
+    width: 80%;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Gaya tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* Gaya header tabel */
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Gaya sel tabel */
+td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: center;
+    background-color: #fff;
+    color: #333;
+}
+
+.pengajar {
+    width: 80%;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Gaya tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+/* Gaya header tabel */
+th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Gaya sel tabel */
+td {
+    border: 1px solid #ddd;
+    padding: 14px;
+    text-align: center;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Gaya hover pada baris tabel */
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+footer {
+      background: linear-gradient(45deg, #b6895b, #b6895b);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+      animation: gradientShift 6s infinite alternate;
+    }
+
+    @keyframes gradientShift {
+      from {
+        background: linear-gradient(90deg, #af7d4c, #745b35);
+      }
+      to {
+        background: linear-gradient(90deg, #af7d4c,#745b35);
+      }
+    }
+
+    .footer-title {
+      font-size: 28px;
+      font-weight: bold;
+      text-transform: uppercase;
+      animation: fadeInUp 2s ease-in-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .footer-text {
+      font-size: 18px;
+      margin-top: 10px;
+      animation: slideIn 2.5s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(-100vw);
+      }
+      to {
+        transform: translateX(0);
+      }
+    }
+
+    .footer-contact {
+      font-size: 16px;
+      margin-top: 15px;
+      opacity: 0.9;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
