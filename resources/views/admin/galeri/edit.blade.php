@@ -51,7 +51,7 @@
 </head>
 <body>
     @include('admin.sidebar')
-
+    @include('admin.navbar')
     <div class="main-wrapper">
         <div class="card shadow">
             <div class="card-header">
@@ -71,6 +71,7 @@
                 <form action="{{ route('admin.galeri.update', $galeri->galeri_id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
                     <div class="mb-3">
                         <label for="gambar" class="form-label">Gambar</label>
                         <input type="file" class="form-control" id="gambar" name="gambar">
@@ -82,7 +83,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary me-2">Update</button>
-                        <a href="{{ route('admin.galeri.index') }}" class="btn btn-secondary">Batal</a>
+                        <a href="{{ route('admin.galeri.index') }}" class="btn btn-secondary">Cancel</a>
                     </div>
                 </form>
             </div>

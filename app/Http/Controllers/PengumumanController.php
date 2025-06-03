@@ -3,123 +3,160 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengumuman;
+use App\Models\User; // Tambahkan ini
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator; // Tambahkan ini
+use Illuminate\Support\Facades\Storage; // Tambahkan jika Anda mengelola file
 
 class PengumumanController extends Controller
 {
     /**
-     * Menampilkan daftar semua pengumuman.
+     * Menampilkan daftar semua pengumuman. (Admin)
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        // Ambil semua data Pengumuman, urutkan dari yang terbaru, gunakan paginasi
-        $pengumuman = Pengumuman::latest()->paginate(10);
-        return view('admin.pengumuman.index', compact('pengumuman'));
+        $pengumumans = Pengumuman::latest()->paginate(10);
+        return view('admin.pengumuman.index', compact('pengumumans'));
     }
 
     /**
-     * Menampilkan form untuk membuat pengumuman baru.
+     * Menampilkan form untuk membuat pengumuman baru. (Admin)
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        // Tampilkan view 'pengumuman.create'
-        return view('admin.pengumuman.create');
+        // Ambil daftar user dengan role admin
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'admin');
+        })->get();
+
+        return view('admin.pengumuman.create', compact('users')); // Kirim data $users ke view
     }
 
     /**
-     * Menyimpan pengumuman baru ke database.
+     * Menyimpan pengumuman baru ke database. (Admin)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        // Validasi data yang masuk dari form
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'judul_pengumuman' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'nullable|string',
         ]);
 
-        // Buat Pengumuman baru menggunakan data yang sudah divalidasi
-        Pengumuman::create($validatedData);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        // Redirect ke halaman index pengumuman dengan pesan sukses
-        return redirect()->route('admin.pengumuman.index')
-                         ->with('success', 'Pengumuman berhasil ditambahkan.');
+        $data = $request->all();
+
+        $data['user_id'] = auth()->id();
+
+        try {
+            Pengumuman::create($data);
+            return redirect()->route('admin.pengumuman.index')
+                             ->with('success', 'Pengumuman berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menyimpan data.');
+        }
     }
 
     /**
-     * Menampilkan detail spesifik pengumuman.
+     * Menampilkan detail spesifik pengumuman. (Admin)
      *
      * @param  \App\Models\Pengumuman  $pengumuman
      * @return \Illuminate\Http\Response
      */
-    public function show(Pengumuman $pengumuman) // Menggunakan Route Model Binding
+    public function show(Pengumuman $pengumuman)
     {
-        // Tampilkan view 'pengumuman.show' dengan data pengumuman yang dipilih
-        return view('pengumuman.show', compact('pengumuman'));
+        return view('admin.pengumuman.show', compact('pengumuman'));
     }
 
     /**
-     * Menampilkan form untuk mengedit pengumuman.
+     * Menampilkan form untuk mengedit pengumuman. (Admin)
      *
      * @param  \App\Models\Pengumuman  $pengumuman
      * @return \Illuminate\Http\Response
      */
-    public function edit(Pengumuman $pengumuman) // Menggunakan Route Model Binding
+    public function edit(Pengumuman $pengumuman)
     {
-        // Tampilkan view 'pengumuman.edit' dengan data pengumuman yang akan diedit
-        return view('admin.pengumuman.edit', compact('pengumuman'));
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'admin');
+        })->get();
+
+        return view('admin.pengumuman.edit', compact('pengumuman', 'users'));
     }
 
     /**
-     * Memperbarui pengumuman yang ada di database.
+     * Memperbarui pengumuman yang ada di database. (Admin)
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Pengumuman  $pengumuman
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pengumuman $pengumuman) // Menggunakan Route Model Binding
+    public function update(Request $request, Pengumuman $pengumuman)
     {
-        // Validasi data yang masuk dari form edit
-        $validatedData = $request->validate([
+        $validator = Validator::make($request->all(), [
             'judul_pengumuman' => 'required|string|max:255',
             'tanggal' => 'required|date',
-            'deskripsi' => 'required|string',
+            'deskripsi' => 'nullable|string',
         ]);
 
-        // Update data pengumuman yang ada dengan data yang sudah divalidasi
-        $pengumuman->update($validatedData);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        // Redirect ke halaman index pengumuman dengan pesan sukses
-        return redirect()->route('admin.pengumuman.index')
-                         ->with('success', 'Pengumuman berhasil diperbarui.');
+        $data = $request->except('user_id');
+
+        try {
+            $pengumuman->update($data);
+            return redirect()->route('admin.pengumuman.index')
+                             ->with('success', 'Pengumuman berhasil diperbarui.');
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memperbarui data.');
+        }
     }
 
     /**
-     * Menghapus pengumuman dari database.
+     * Menghapus pengumuman dari database. (Admin)
      *
      * @param  \App\Models\Pengumuman  $pengumuman
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Pengumuman $pengumuman) // Menggunakan Route Model Binding
+    public function destroy(Pengumuman $pengumuman)
     {
-        // Hapus data pengumuman
-        $pengumuman->delete();
+        try {
+            // Hapus file terkait (jika ada)
+            // if ($pengumuman->gambar && Storage::exists('public/pengumuman/' . $pengumuman->gambar)) {
+            //     Storage::delete('public/pengumuman/' . $pengumuman->gambar);
+            // }
 
-        // Redirect ke halaman index pengumuman dengan pesan sukses
-        return redirect()->route('admin.pengumuman.index')
-                         ->with('success', 'Pengumuman berhasil dihapus.');
+            $pengumuman->delete();
+            return redirect()->route('admin.pengumuman.index')
+                             ->with('success', 'Pengumuman berhasil dihapus.');
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat menghapus data.');
+        }
     }
 
-    public function showPublic(Pengumuman $pengumuman) // Nama parameter $pengumuman sesuai model binding
+    /**
+     * Menampilkan daftar semua pengumuman untuk publik. (Public)
+     *
+     * @param  \App\Models\Pengumuman  $pengumuman
+     * @return \Illuminate\Http\Response
+     */
+    public function showPublic() // Menyesuaikan nama parameter
     {
-        $semua_pengumuman = Pengumuman::all(); // Ambil semua data pengumuman
-        return view('Pengumuman.index', compact('semua_pengumuman')); // Tampilkan detail Pngumuman untuk publik
+        $pengumumans = Pengumuman::all();
+        return view('Pengumuman.index', compact('pengumumans'));
     }
 }

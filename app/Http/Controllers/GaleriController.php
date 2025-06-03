@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Galeri;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator; // Tambahkan ini
+use Illuminate\Support\Facades\Auth;
 
 class GaleriController extends Controller
 {
@@ -15,7 +18,7 @@ class GaleriController extends Controller
      */
     public function index()
     {
-        $galeris = Galeri::all(); // Ambil semua data Galeri
+        $galeris = Galeri::paginate(8);  // Ambil semua data Galeri
         return view('admin.galeri.index', compact('galeris')); // Kirim data ke view admin
     }
 
@@ -26,7 +29,11 @@ class GaleriController extends Controller
      */
     public function create()
     {
-        return view('admin.galeri.create'); // Tampilkan form untuk membuat Galeri baru
+        // Ambil daftar user dengan role admin
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'admin');
+        })->get();
+        return view('admin.galeri.create', compact('users')); // Kirim data ke view create
     }
 
     /**
@@ -37,11 +44,15 @@ class GaleriController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi data
-        $request->validate([
+        // Validasi data menggunakan Validator
+        $validator = Validator::make($request->all(), [
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'deskripsi' => 'nullable|string',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
         // Simpan gambar
         $gambarName = time().'.'.$request->gambar->extension();
@@ -49,6 +60,7 @@ class GaleriController extends Controller
 
         // Buat Galeri baru
         Galeri::create([
+            'user_id' => auth()->id(),
             'gambar' => $gambarName,
             'deskripsi' => $request->deskripsi,
         ]);
@@ -76,7 +88,11 @@ class GaleriController extends Controller
      */
     public function edit(Galeri $galeri)
     {
-        return view('admin.galeri.edit', compact('galeri')); // Tampilkan form untuk mengedit galeri
+        // Ambil daftar user dengan role admin
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'admin');
+        })->get();
+        return view('admin.galeri.edit', compact('galeri', 'users')); // Kirim data user ke view
     }
 
     /**
@@ -88,11 +104,17 @@ class GaleriController extends Controller
      */
     public function update(Request $request, Galeri $galeri)
     {
-        // Validasi data
-        $request->validate([
+        // Validasi data menggunakan Validator
+        $validator = Validator::make($request->all(), [
             'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'deskripsi' => 'nullable|string',
         ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $data = $request->except('user_id');
 
         // Jika ada gambar baru
         if ($request->hasFile('gambar')) {
@@ -106,8 +128,7 @@ class GaleriController extends Controller
         }
 
         // Update data galeri
-        $galeri->deskripsi = $request->deskripsi;
-        $galeri->save();
+        $galeri->update($data);
 
         // Redirect ke halaman index dengan pesan sukses
         return redirect()->route('admin.galeri.index')->with('success', 'Galeri berhasil diperbarui.');
@@ -141,6 +162,6 @@ class GaleriController extends Controller
     public function showPublic()
     {
         $galeris = Galeri::all(); // Ambil semua data Galeri
-        return view('Galeri.index', compact('galeris')); //  Tampilkan detail Galeri untuk publik
+        return view('Galeri.index', compact('galeris')); //  Tampilkan detail Galeri untuk publik
     }
 }

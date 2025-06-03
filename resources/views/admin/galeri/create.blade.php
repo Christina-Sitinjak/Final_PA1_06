@@ -48,7 +48,7 @@
 </head>
 <body>
     @include('admin.sidebar')
-
+    @include('admin.navbar')
     <div class="main-wrapper">
         <div class="card shadow">
             <div class="card-header">
@@ -75,6 +75,7 @@
                         <label for="deskripsi" class="form-label">Deskripsi</label>
                         <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3"></textarea>
                     </div>
+
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary me-2">Simpan</button>
                         <a href="{{ route('admin.galeri.index') }}" class="btn btn-secondary">Batal</a>

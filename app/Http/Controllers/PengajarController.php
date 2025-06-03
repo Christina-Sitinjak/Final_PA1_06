@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengajar;
+use App\Models\User; // Tambahkan ini
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage; // Import facade Storage
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator; // Tambahkan ini
 
 class PengajarController extends Controller
 {
@@ -15,7 +17,7 @@ class PengajarController extends Controller
      */
     public function index()
     {
-        $pengajars = Pengajar::all(); // Ambil semua data pengajar
+        $pengajars = Pengajar::paginate(7); // Ambil semua data pengajar
         return view('admin.pengajar.index', compact('pengajars')); // Kirim data ke view admin
     }
 
@@ -26,7 +28,11 @@ class PengajarController extends Controller
      */
     public function create()
     {
-        return view('admin.pengajar.create'); // Tampilkan form untuk membuat pengajar baru (admin)
+        // Ambil daftar user dengan role admin
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'admin');
+        })->get();
+        return view('admin.pengajar.create', compact('users')); // Tampilkan form untuk membuat pengajar baru (admin) dan kirim data users
     }
 
     /**
@@ -37,7 +43,17 @@ class PengajarController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
+            'user_id' => [
+                'required',
+                'exists:users,id',
+                function ($attribute, $value, $fail) {
+                    $user = User::find($value);
+                    if (!$user || $user->role?->nama_role !== 'admin') {
+                        $fail('The selected user is not an admin.');
+                    }
+                },
+            ],
             'nama_pengajar' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20', // Sesuaikan panjang max jika perlu
             'deskripsi' => 'nullable|string',
@@ -46,12 +62,11 @@ class PengajarController extends Controller
 
         $data = $request->all();
 
-        if ($request->hasFile('gambar')) {
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
-            $path = $gambar->storeAs('public/pengajars', $nama_gambar); // Simpan gambar ke storage/app/public/pengajars
+        $data['user_id'] = auth()->id();
 
-            $data['gambar'] = $nama_gambar; // Simpan nama file gambar ke database
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar')->store('pengajars', 'public');
+            $data['gambar'] = $gambar;
         }
 
         Pengajar::create($data);
@@ -79,7 +94,11 @@ class PengajarController extends Controller
      */
     public function edit(Pengajar $pengajar)
     {
-        return view('admin.pengajar.edit', compact('pengajar')); // Tampilkan form untuk mengedit pengajar (admin)
+        // Ambil daftar user dengan role admin
+        $users = User::whereHas('role', function ($query) {
+            $query->where('nama_role', 'admin');
+        })->get();
+        return view('admin.pengajar.edit', compact('pengajar', 'users')); // Tampilkan form untuk mengedit pengajar (admin) dan kirim data users
     }
 
     /**
@@ -91,26 +110,33 @@ class PengajarController extends Controller
      */
     public function update(Request $request, Pengajar $pengajar)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
+            'user_id' => [
+                'required',
+                'exists:users,id',
+                function ($attribute, $value, $fail) {
+                    $user = User::find($value);
+                    if (!$user || $user->role?->nama_role !== 'admin') {
+                        $fail('The selected user is not an admin.');
+                    }
+                },
+            ],
             'nama_pengajar' => 'required|string|max:255',
             'phone_number' => 'required|string|max:20', // Sesuaikan panjang max jika perlu
             'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Validasi gambar
         ]);
 
-        $data = $request->all();
+        $data = $request->except('user_id');
 
         if ($request->hasFile('gambar')) {
             // Hapus gambar lama jika ada
-            if ($pengajar->gambar) {
+            if ($pengajar->gambar && Storage::exists('public/pengajars/' . $pengajar->gambar)) {
                 Storage::delete('public/pengajars/' . $pengajar->gambar);
             }
 
-            $gambar = $request->file('gambar');
-            $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
-            $path = $gambar->storeAs('public/pengajars', $nama_gambar);
-
-            $data['gambar'] = $nama_gambar;
+            $gambar = $request->file('gambar')->store('pengajars', 'public');
+            $data['gambar'] = $gambar;
         }
 
         $pengajar->update($data);
@@ -128,7 +154,7 @@ class PengajarController extends Controller
     public function destroy(Pengajar $pengajar)
     {
         // Hapus gambar jika ada
-        if ($pengajar->gambar) {
+        if ($pengajar->gambar && Storage::exists('public/pengajars/' . $pengajar->gambar)) {
             Storage::delete('public/pengajars/' . $pengajar->gambar);
         }
 
@@ -147,6 +173,6 @@ class PengajarController extends Controller
     public function showPublic(Pengajar $Pengajar)
     {
         $pengajars = Pengajar::all(); // Ambil semua data pengajar
-        return view('Pengajar.index', compact('pengajars')); // Tampilkan detail Pengajar untuk publik
+        return view('Pengajar.index', compact('pengajars')); // Tampilkan detail Pengajar untuk publik
     }
 }

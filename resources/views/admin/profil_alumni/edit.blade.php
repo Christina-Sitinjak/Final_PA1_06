@@ -76,6 +76,7 @@
                 <form action="{{ route('admin.profil_alumni.update', $profilAlumni->profil_alumni_id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama</label>
                         <input type="text" class="form-control" id="nama" name="nama" value="{{ $profilAlumni->nama }}">
@@ -84,7 +85,7 @@
                         <label for="gambar" class="form-label">Gambar</label>
                         <input type="file" class="form-control" id="gambar" name="gambar">
                         @if($profilAlumni->gambar)
-                            <img src="{{ asset('storage/profil_alumnis/' . $profilAlumni->gambar) }}" alt="{{ $profilAlumni->nama }}" class="preview">
+                            <img src="{{ asset('storage/profil_alumni/' . $profilAlumni->gambar) }}" alt="{{ $profilAlumni->nama }}" class="preview">
                         @endif
                     </div>
                     <div class="mb-3">
@@ -97,7 +98,7 @@
                     </div>
                     <div class="d-flex justify-content-end">
                         <button type="submit" class="btn btn-update me-2">Update</button>
-                        <a href="{{ route('admin.profil_alumni.index') }}" class="btn btn-cancel">Batal</a>
+                        <a href="{{ route('admin.profil_alumni.index') }}" class="btn btn-cancel">Cancel</a>
                     </div>
                 </form>
             </div>

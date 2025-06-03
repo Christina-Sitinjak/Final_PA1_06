@@ -9,15 +9,18 @@ class Pengumuman extends Model
 {
     use HasFactory;
 
-    protected $table = 'pengumuman';
-    protected $primaryKey = 'pengumuman_id';
-    public $timestamps = true;
-    protected $fillable = [
+    protected $table = 'pengumumans'; // Nama tabel
+    protected $primaryKey = 'pengumuman_id'; // Primary key
+    protected $fillable = [ // Kolom yang boleh diisi (mass assignment)
+        'user_id',
         'judul_pengumuman',
         'tanggal',
         'deskripsi',
     ];
-    protected $casts = [
-        'tanggal' => 'date',
-    ];
+
+    // Relasi ke tabel User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

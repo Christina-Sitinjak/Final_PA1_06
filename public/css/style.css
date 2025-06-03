@@ -36,33 +36,48 @@ body {
 }
 .navbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Pusatkan kontainer utama */
     align-items: center;
     padding: 1.4rem 7%;
     background-color: rgba(1, 1, 1, 0.8);
     border-bottom: 1px solid #513c28;
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 999;
+    z-index: 1000; /* Sangat penting */
+}
+
+.navbar-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* --- Kiri: Logo + Teks --- */
+.navbar-left {
+    display: flex;
+    align-items: center;
 }
 
 .navbar img {
-    width: 70px; /* Ukuran gambar logo */
+    width: 70px;
     height: 70px;
-    border-radius: 70%; /* Membuat logo berbentuk bulat */
-    margin-right: 5px; /* Jarak antara logo dan teks */
+    border-radius: 70%;
+    margin-right: 10px;
 }
 
 .navbar-logo {
     display: flex;
-    align-items: center; /* Membuat teks sejajar dengan logo */
+    align-items: center;
     font-size: 2rem;
     font-weight: 700;
     color: #fff;
     font-style: italic;
-    text-decoration: none; /* Menghilangkan garis bawah pada link */
+    text-decoration: none;
+    margin-right: 30px; /* Tambah jarak ke navbar-nav */
 }
 
 .navbar-logo span {
@@ -70,16 +85,19 @@ body {
     margin-right: 5px;
 }
 
+/* --- Tengah: Navigasi --- */
 .navbar-nav {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 1.4rem;
 }
 
 .navbar-nav a {
     color: #fff;
     font-size: 1.4rem;
-    margin: 0 1rem;
     text-decoration: none;
+    position: relative;
 }
 
 .navbar-nav a:hover {
@@ -99,6 +117,26 @@ body {
     transform: scaleX(0.5);
 }
 
+/* --- Kanan: Pemesanan Kelas --- */
+.navbar-right {
+    margin-left: auto;
+}
+
+.navbar-right a {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.navbar-right a:hover {
+    color: var(--primary);
+}
+
+/* Tambahan untuk ikon atau tombol ekstra jika diperlukan */
 .navbar-extra a {
     color: #fff;
     margin: 0 0.5rem;
@@ -106,6 +144,25 @@ body {
 
 .navbar-extra a:hover {
     color: var(--primary);
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .navbar-right {
+        align-self: flex-end;
+        margin-top: 10px;
+    }
 }
 
 
@@ -194,7 +251,15 @@ body {
     color: var(--primary);
 }
 
+@media (max-width: 768px) {
+    .about {
+        text-align: center;
+    }
 
+    .about {
+        text-align: center;
+    }
+}
 .about .row{
     display: flex;
 }
@@ -208,8 +273,8 @@ body {
 }
 
 .about .row .content{
-    flex: 1 1 35rem;
-    padding: 0 1rem;
+    flex: 1 1 50%;
+    padding: 0 ;
 }
 
 .about .row .content h3{
@@ -445,212 +510,89 @@ footer .credit a{
 
 }
 
-.sistem-belajar {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin: 30px auto;
-    padding: 30px;
-    max-width: 800px;
-    transition: transform 0.3s;
-}
-
-.sistem-belajar:hover {
-    transform: scale(1.02); /* Efek zoom saat hover pada seluruh section */
-}
-
-.sistem-belajar h2 {
-    text-align: center;
-    color: #ad9a67; /* Warna biru cerah */
-    font-size: 28px;
-    margin-bottom: 20px;
-    position: relative;
-}
-
-.sistem-belajar h2 span {
-    color: #554728; /* Warna aksen */
+/* Gaya Judul */
+.judul-home {
+    font-size: 2.5em;
     font-weight: bold;
-}
-
-.sistem-belajar .content ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sistem-belajar .content li {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    margin: 15px 0;
-    padding: 20px;
-    position: relative;
-    transition: background-color 0.3s, transform 0.3s;
-    overflow: hidden; /* Untuk efek animasi */
-}
-
-.sistem-belajar .content li:hover {
-    background-color: #18202c; /* Warna biru muda saat hover */
-    transform: translateY(-3px); /* Efek angkat saat hover */
-}
-
-.sistem-belajar .content li:before {
-    content: '';
-    position: absolute;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-}
-
-.sistem-belajar .content li strong {
-    color: #b6895b;
-    font-size: 16px;
-}
-
-.sistem-belajar .content li ul {
-    margin-top: 10px;
-    padding-left: 20px;
-}
-
-.sistem-belajar .content li ul li {
-    background-color: #000000;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 5px 0;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
     padding: 10px;
-    transition: background-color 0.3s;
 }
 
-.sistem-belajar .content li ul li:hover {
-    background-color: #b6895b; /* Warna latar belakang saat hover */
-}
-
-h2 {
-    font-size: 24px;
+.judul-sistem {
+    font-size: 2.5em;
     font-weight: bold;
     text-align: center;
-    background: linear-gradient(to right, #4d3300, #b4955a);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: black; /* Fallback untuk browser yang tidak mendukung */
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
 }
 
-/* Gaya untuk bagian jadwal */
-.jadwal-belajar {
-    width: 80%;
-    margin: 30px auto;
-    padding: 25px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Gaya tabel */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-/* Gaya header tabel */
-th {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px;
-    text-align: center;
-    font-weight: bold;
-}
-
-/* Gaya sel tabel */
-td {
-    border: 1px solid #ddd;
-    padding: 14px;
-    text-align: center;
-    background-color: #fff;
-    color: #333;
-}
-
-/* Gaya hover pada baris tabel */
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Gaya link kembali */
-.back-link {
-    display: inline-block;
-    margin-top: 20px;
-    text-decoration: none;
-    color: #4CAF50;
-    font-weight: bold;
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 8px;
-    background: #fff;
-    border: 2px solid #4CAF50;
-    transition: 0.3s ease;
-}
-
-.back-link:hover {
-    background: #4CAF50;
-    color: white;
-}
-
-.private-class {
-    background-color: #f9f9f9; /* Warna latar belakang */
-    font-size: 18px;
+.judul-jadwal {
+    font-size: 2.5em;
     font-weight: bold;
     text-align: center;
-    color: #333;
-    border-top: 2px solid #4CAF50;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
 }
 
-/* Efek hover untuk Private Class */
-.private-class:hover {
-    background-color: #e8f5e9;
-}
-
-.jadwal-belajar {
-    width: 80%;
-    margin: 30px auto;
-    padding: 25px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
-}
-
-/* Gaya tabel */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-/* Gaya header tabel */
-th {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px;
-    text-align: center;
+.judul-kelas {
+    font-size: 2.5em;
     font-weight: bold;
-}
-
-/* Gaya sel tabel */
-td {
-    border: 1px solid #ddd;
-    padding: 14px;
     text-align: center;
-    background-color: #fff;
-    color: #333;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
 }
 
-.kelas-belajar {
-    width: 80%;
-    margin: 30px auto;
-    padding: 25px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+.judul-galeri {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
 }
+
+.judul-pengajar {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
+}
+
+.judul-alumni {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
+}
+
+
+.judul-galeri {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
+}
+
+.judul-pengumuman {
+    font-size: 2.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    background-color: #000;
+    padding: 10px;
+}
+
 
 /* Gaya tabel */
 table {

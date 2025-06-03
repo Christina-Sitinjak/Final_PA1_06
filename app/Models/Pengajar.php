@@ -9,13 +9,19 @@ class Pengajar extends Model
 {
     use HasFactory;
 
-    protected $table = 'pengajar'; // Nama tabel di database
-    protected $primaryKey = 'pengajar_id'; // Nama kolom primary key
-    public $timestamps = true; // Aktifkan timestamps (created_at, updated_at)
-    protected $fillable = [
+    protected $table = 'pengajars'; // Nama tabel
+    protected $primaryKey = 'pengajar_id'; // Primary key
+    protected $fillable = [ // Kolom yang boleh diisi (mass assignment)
+        'user_id',
         'nama_pengajar',
         'gambar',
         'phone_number',
         'deskripsi',
     ];
+
+    // Relasi ke tabel User (jika ada foreign key)
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

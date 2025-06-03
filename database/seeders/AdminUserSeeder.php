@@ -2,30 +2,36 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\User;
+use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class AdminUserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        // Periksa apakah admin sudah ada. Jika sudah, jangan buat lagi.
-        if (User::where('email', 'admin@example.com')->exists()) {
+        // Cek apakah role admin sudah ada
+        $adminRole = Role::where('nama_role', 'admin')->first();
+
+        if (!$adminRole) {
+            $this->command->error('Role "admin" tidak ditemukan. Pastikan RoleSeeder sudah dijalankan.');
+            return;
+        }
+
+        // Jika admin sudah ada, lewati pembuatan admin baru
+        if (User::where('email', 'adminuec@gmail.com')->exists()) {
             $this->command->info('Admin user already exists, skipping.');
             return;
         }
 
+        // Membuat user admin
         User::create([
             'name' => 'Administrator',
             'email' => 'adminuec@gmail.com',
-            'phone_number' => '', // Ganti dengan nomor telepon yang sesuai
-            'password' => Hash::make('ueclaguboti'), // Ganti 'password' dengan password yang lebih kuat
-            'role' => 'admin',
+            'phone_number' => '',
+            'password' => Hash::make('ueclaguboti'),
+            'role_id' => $adminRole->id, // Menggunakan ID role admin
         ]);
 
         $this->command->info('Admin user created successfully.');

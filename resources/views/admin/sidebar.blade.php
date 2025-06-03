@@ -30,7 +30,7 @@
             <ul class="nav nav-treeview">
                 <!-- Kelas -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.kelas.index') }}" class="nav-link {{ request()->is('admin/kelas*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.program.index') }}" class="nav-link {{ request()->is('admin/program*') ? 'active' : '' }}">
                         <i class="fas fa-school nav-icon"></i> <!-- Ganti ikon dengan kelas -->
                         <p>Kelas</p>
                     </a>
@@ -67,31 +67,33 @@
                         <p>Pengumuman</p>
                     </a>
                 </li>
-            </ul>
-        </li>
 
-        <!-- Daftar Kelas -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-book-reader"></i> <!-- Ganti ikon dengan buku -->
-                <p>
-                    Daftar Kelas
-                    <i class="fas fa-angle-left right"></i>
-                </p>
-            </a>
-        </li>
+                <!-- Kategori -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.kategori.index') }}" class="nav-link {{ request()->is('admin/kategori*') ? 'active' : '' }}">
+                        <i class="fas fa-tags nav-icon"></i>
+                        <p>Kategori</p>
+                    </a>
+                </li>
 
-        <!-- Tables -->
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-table"></i>
-                <p>
-                    Tables
-                    <i class="fas fa-angle-left right"></i>
-                </p>
-            </a>
-        </li>
+                <!-- Daftar Pemesanan Kelas -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.daftar_pemesanan.index') }}" class="nav-link {{ request()->is('admin/daftar_pemesanan*') ? 'active' : '' }}">
+                        <i class="fas fa-book-reader nav-icon"></i>
+                        <p>Daftar Pemesanan Kelas</p>
+                    </a>
+                </li>
 
+            <!-- Logout -->
+            <li class="nav-item">
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link">
+                    <i class="fas fa-power-off nav-icon"></i>
+                    <p>Logout</p>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </li>
     </ul>
 </nav>
 <!-- /.sidebar-menu -->

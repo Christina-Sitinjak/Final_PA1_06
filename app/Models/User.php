@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,8 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Tambahkan role di sini
         'phone_number',
+        'role_id', // Ganti dari 'role' ke 'role_id'
     ];
 
     /**
@@ -45,14 +44,27 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // Helper methods untuk mengecek role
-    public function isAdmin()
+    /**
+     * Relasi ke model Role.
+     */
+    public function role()
     {
-        return $this->role === 'admin';
+        return $this->belongsTo(Role::class);
     }
 
-    public function isUser()
+    /**
+     * Helper method untuk cek apakah user adalah admin.
+     */
+    public function isAdmin()
     {
-        return $this->role === 'user';
+        return $this->role?->nama_role === 'admin';
+    }
+
+    /**
+     * Helper method untuk cek apakah user adalah murid.
+     */
+    public function isMurid()
+    {
+        return $this->role?->nama_role === 'murid';
     }
 }

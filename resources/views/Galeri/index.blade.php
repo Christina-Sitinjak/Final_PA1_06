@@ -49,17 +49,8 @@
     @include('layout.navbar')
     <!-- Navbar end -->
 
-    <!-- Hero section start -->
-    <section class="hero" id="home">
-        <main class="content">
-            <h1>UNIVERSAL<span> ENGLISH COURSE </span></h1>
-            <a href="{{ route('login') }}" class="cta">Pesan Sekarang</a>
-        </main>
-    </section>
-    <!-- Hero section end -->
-
     <section id="galeri" class="galeri">
-        <h2><span>Galeri</span> Kami</h2>
+        <h2 class="judul-galeri">Galeri Kami</h2>
         <div class="galeri-container">
             @if(isset($galeris) && count($galeris) > 0)
                 @foreach ($galeris as $galeri)
@@ -75,6 +66,28 @@
             @endif
         </div>
     </section>
+
+    <!-- Tombol Pesan Sekarang -->
+    <section style="text-align:center; margin: 40px 0;">
+        <a href="{{ route('login') }}" class="btn-pesan">Pesan Sekarang!</a>
+    </section>
+
+    <style>
+        .btn-pesan {
+            background-color: #b6895b;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .btn-pesan:hover {
+            background-color: #d7b49e;
+        }
+    </style>
 
     <!-- Footer start -->
     <!-- Footer start -->

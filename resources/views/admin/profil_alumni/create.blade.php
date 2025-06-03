@@ -51,7 +51,7 @@
     <div class="main-wrapper">
         <div class="card shadow">
             <div class="card-header">
-                Tambah Profil Alumni
+                Tambah Profil Alumni Baru
             </div>
             <div class="card-body">
                 {{-- Tampilkan error validasi jika ada --}}
@@ -68,6 +68,7 @@
                 <form action="{{ route('admin.profil_alumni.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
+
                         <div class="col-md-6 mb-3">
                             <label for="nama" class="form-label">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}">

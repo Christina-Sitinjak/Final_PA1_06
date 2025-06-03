@@ -6,12 +6,12 @@
     <style>
         .profil_alumni {
             text-align: center;
-            padding: 50px 20px;
+            background-color: #000;
         }
-        .profil_alumni h2 {
+        .judul-alumni {
             font-size: 2.5em;
             margin-bottom: 20px;
-            color: #333;
+            color: #fff ;
         }
         .profil-container {
             display: grid;
@@ -48,26 +48,20 @@
             color: #555;
             line-height: 1.5;
         }
+
     </style>
 </head>
 <body>
     @include('layout.navbar')
 
-    <section class="hero" id="home">
-        <main class="content">
-            <h1>UNIVERSAL<span> ENGLISH COURSE </span></h1>
-            <a href="{{ route('login') }}" class="cta">Pesan Sekarang</a>
-        </main>
-    </section>
-
     <section id="profil_alumni" class="profil_alumni">
-        <h2><span>Daftar</span> Profil Alumni</h2>
+        <h2 class="judul-alumni">Daftar Profil Alumni</h2>
         <div class="profil-container">
             @if(isset($profilAlumnis) && count($profilAlumnis) > 0)
                 @foreach ($profilAlumnis as $profilAlumni)
                     <div class="profil-card">
                         @if($profilAlumni->gambar)
-                            <img src="{{ asset('storage/profil_alumnis/' . $profilAlumni->gambar) }}" alt="{{ $profilAlumni->nama }}">
+                            <img src="{{ asset('storage/profil_alumni/' . $profilAlumni->gambar) }}" alt="{{ $profilAlumni->nama }}">
                         @else
                             <img src="https://via.placeholder.com/150" alt="No Image">
                         @endif
@@ -82,6 +76,28 @@
         </div>
     </section>
 
+    <!-- Tombol Pesan Sekarang -->
+    <section style="text-align:center; margin: 40px 0;">
+        <a href="{{ route('login') }}" class="btn-pesan">Pesan Sekarang!</a>
+    </section>
+
+    <style>
+        .btn-pesan {
+            background-color: #b6895b;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+        }
+        .btn-pesan:hover {
+            background-color: #d7b49e;
+        }
+    </style>
+
     @include('layout.footer')
 
     <script>
@@ -89,4 +105,6 @@
     </script>
     <script src="{{URL::asset('js/script.js')}}"></script>
 </body>
+
+
 </html>

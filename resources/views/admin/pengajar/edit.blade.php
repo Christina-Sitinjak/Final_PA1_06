@@ -67,7 +67,7 @@
                         <label for="gambar" class="form-label">Gambar</label>
                         <input type="file" class="form-control" id="gambar" name="gambar">
                         @if($pengajar->gambar)
-                            <img src="{{ asset('storage/pengajars/' . $pengajar->gambar) }}" alt="{{ $pengajar->nama_pengajar }}" class="preview">
+                            <img src="{{ asset('storage/' . $pengajar->gambar) }}" alt="{{ $pengajar->nama_pengajar }}" class="preview">
                         @endif
                     </div>
 
@@ -82,7 +82,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-primary">Update</button>
-                    <a href="{{ route('admin.pengajar.index') }}" class="btn btn-secondary">Batal</a>
+                    <a href="{{ route('admin.pengajar.index') }}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>

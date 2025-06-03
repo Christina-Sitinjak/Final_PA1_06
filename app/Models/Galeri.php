@@ -9,11 +9,17 @@ class Galeri extends Model
 {
     use HasFactory;
 
-    protected $table = 'galeri'; // Nama tabel di database
-    protected $primaryKey = 'galeri_id'; // Primary key tabel
-    public $timestamps = true; // Menggunakan timestamps (created_at, updated_at)
-    protected $fillable = [
+    protected $table = 'galeris'; // Nama tabel
+    protected $primaryKey = 'galeri_id'; // Primary key
+    protected $fillable = [ // Kolom yang boleh diisi (mass assignment)
+        'user_id',
         'gambar',
         'deskripsi',
     ];
+
+    // Relasi ke tabel User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

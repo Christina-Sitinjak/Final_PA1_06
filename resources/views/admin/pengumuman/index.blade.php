@@ -86,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($pengumuman as $item)
+                            @forelse($pengumumans as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->judul_pengumuman }}</td>
@@ -101,7 +101,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-hapus d-flex align-items-center">
-                                                    <i class="bi bi-trash me-1"></i> Hapus
+                                                    <i class="bi bi-trash me-1"></i> Delete
                                                 </button>
                                             </form>
                                         </div>

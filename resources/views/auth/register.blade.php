@@ -1,84 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Register</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Register</title>
     <style>
+        :root {
+            --milk: #f7efe5;
+            --choco: #b6895b;
+            --dark-choco: #5a3e36;
+            --button-hover: #d7b49e;
+        }
+
         body {
-            background: linear-gradient(to right, #C7D3D4FF, #b6895b);
-            font-family: Arial, sans-serif;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, var(--milk), var(--choco));
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
 
         .register-container {
-            background: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 30%;
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
             text-align: center;
         }
 
+        .logo {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .site-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark-choco);
+            margin-bottom: 25px;
+        }
+
         h1 {
-            color: #fff;
-            margin-bottom: 20px;
-            border-bottom: 3px solid white;
+            color: var(--dark-choco);
+            font-size: 22px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--dark-choco);
             display: inline-block;
             padding-bottom: 5px;
         }
 
         .input-field {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             margin-bottom: 20px;
             border: none;
-            border-radius: 20px;
-            font-size: 16px;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            background-color: #fff;
+            font-size: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--button-hover);
         }
 
         .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-top: 10px;
         }
 
         .button {
-            width: 60%;
-            padding: 12px;
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 25px;
-            background: black;
+            border-radius: 30px;
+            background: var(--dark-choco);
             color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             transition: 0.3s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
         }
 
         .button:hover {
-            background: #b6895b;
-            color: black;
-            transform: scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            background: var(--button-hover);
+            color: var(--dark-choco);
+            transform: scale(1.03);
+        }
+
+        .login-text {
+            color: var(--dark-choco);
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login-text a {
+            color: #8d5b3f;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-text a:hover {
+            text-decoration: underline;
         }
 
         .error-message {
             color: red;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
     <div class="register-container">
-        <h1>Admin Register</h1>
+        <!-- Logo dan Judul -->
+        <img src="img/ueclogo.png" alt="Logo UEC" class="logo">
+        <div class="site-title">Universal English Course</div>
+
+        <h1>Register</h1>
 
         @if ($errors->any())
             <div class="error-message">
@@ -102,22 +146,24 @@
                 <button type="submit" class="button">REGISTER</button>
             </div>
         </form>
+
+        <p class="login-text">Sudah punya akun? <a href="{{ route('login') }}">Login di sini</a></p>
     </div>
 
     <script>
         function validateRegisterForm() {
-            var name = document.getElementById('name').value;
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
-            var password_confirmation = document.getElementById('password_confirmation').value;
+            var name = document.getElementById('name').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value.trim();
+            var confirm = document.getElementById('password_confirmation').value.trim();
 
-            if (name.trim() === "" || email.trim() === "" || password.trim() === "" || password_confirmation.trim() === "") {
+            if (!name || !email || !password || !confirm) {
                 alert("Semua field harus diisi!");
                 return false;
             }
 
-            if (password !== password_confirmation) {
-                alert("Password dan konfirmasi password tidak sama!");
+            if (password !== confirm) {
+                alert("Password dan konfirmasi tidak cocok!");
                 return false;
             }
 

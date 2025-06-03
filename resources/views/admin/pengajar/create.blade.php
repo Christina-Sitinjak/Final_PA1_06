@@ -66,6 +66,7 @@
                         <label for="deskripsi" class="form-label">Deskripsi</label>
                         <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi') }}</textarea>
                     </div>
+
                     <button type="submit" class="btn btn-primary">Simpan</button>
                     <a href="{{ route('admin.pengajar.index') }}" class="btn btn-secondary">Batal</a>
                 </form>

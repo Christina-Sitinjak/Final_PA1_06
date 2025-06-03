@@ -1,83 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Admin Login</title>
     <style>
+        :root {
+            --milk: #f7efe5;
+            --choco: #b6895b;
+            --dark-choco: #5a3e36;
+            --button-hover: #d7b49e;
+        }
+
         body {
-            background: linear-gradient(to right, #C7D3D4FF, #b6895b);
-            font-family: Arial, sans-serif;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(120deg, var(--milk), var(--choco));
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
         }
 
         .login-container {
-            background: rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(15px);
             padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 30%;
-            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
 
+        .logo {
+            width: 80px;
+            margin-bottom: 10px;
+        }
+
+        .site-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--dark-choco);
+            margin-bottom: 25px;
+        }
+
         h1 {
-            color: #fff;
-            margin-bottom: 20px;
-            border-bottom: 3px solid white;
+            color: var(--dark-choco);
+            font-size: 22px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--dark-choco);
             display: inline-block;
             padding-bottom: 5px;
         }
 
         .input-field {
             width: 100%;
-            padding: 12px;
+            padding: 14px 16px;
             margin-bottom: 20px;
             border: none;
-            border-radius: 20px;
-            font-size: 16px;
-            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 30px;
+            background-color: #fff;
+            font-size: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08);
+            transition: 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px var(--button-hover);
         }
 
         .button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-top: 10px;
         }
 
         .button {
-            width: 60%;
-            padding: 12px;
+            width: 100%;
+            padding: 14px;
             border: none;
-            border-radius: 25px;
-            background: black;
+            border-radius: 30px;
+            background: var(--dark-choco);
             color: white;
             font-size: 16px;
+            font-weight: bold;
             cursor: pointer;
             transition: 0.3s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
         }
 
         .button:hover {
-            background: #b6895b;
-            color: black;
-            transform: scale(1.05);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+            background: var(--button-hover);
+            color: var(--dark-choco);
+            transform: scale(1.03);
         }
 
         .register-text {
-            color: white;
-            margin-top: 10px;
+            color: var(--dark-choco);
+            margin-top: 15px;
             font-size: 14px;
         }
 
         .register-text a {
-            color: yellow;
+            color: #8d5b3f;
             text-decoration: none;
             font-weight: bold;
         }
@@ -88,12 +112,16 @@
 
         .error-message {
             color: red;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
+        <!-- Logo dan Judul -->
+        <img src="img/ueclogo.png" alt="Logo UEC" class="logo">
+        <div class="site-title">Universal English Course</div>
+
         <h1>Login</h1>
 
         @if ($errors->any())
@@ -113,18 +141,18 @@
 
             <div class="button-container">
                 <button type="submit" class="button">LOGIN</button>
-
             </div>
         </form>
+
         <p class="register-text">Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
     </div>
 
     <script>
         function validateForm() {
-            var email = document.getElementById('email').value;
-            var password = document.getElementById('password').value;
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value.trim();
 
-            if (email.trim() === "" || password.trim() === "") {
+            if (!email || !password) {
                 alert("Email dan Password tidak boleh kosong!");
                 return false;
             }

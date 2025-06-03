@@ -60,6 +60,25 @@
         .table-responsive {
             overflow-x: auto;
         }
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-item .page-link {
+    border-radius: 5px;
+    margin: 0 3px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
     </style>
 </head>
 <body>
@@ -82,7 +101,7 @@
                     <table class="table table-bordered align-middle text-center">
                         <thead class="table-light">
                             <tr>
-                                <th>ID</th>
+                                <th>No</th>
                                 <th>Nama</th>
                                 <th>Gambar</th>
                                 <th>Tahun Lulus</th>
@@ -93,11 +112,11 @@
                         <tbody>
                             @foreach($profilAlumnis as $profilAlumni)
                                 <tr>
-                                    <td>{{ $profilAlumni->profil_alumni_id }}</td>
+                                    <td>{{ ($profilAlumnis->currentPage() - 1) * $profilAlumnis->perPage() + $loop->iteration }}</td>
                                     <td>{{ $profilAlumni->nama }}</td>
                                     <td>
                                         @if($profilAlumni->gambar)
-                                            <img src="{{ asset('storage/profil_alumnis/' . $profilAlumni->gambar) }}" alt="{{ $profilAlumni->nama }}" width="60">
+                                            <img src="{{ asset('storage/profil_alumni/' . $profilAlumni->gambar) }}" alt="{{ $profilAlumni->nama }}" width="60">
                                         @else
                                             No Image
                                         @endif
@@ -113,7 +132,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-hapus d-flex align-items-center">
-                                                    <i class="bi bi-trash me-1"></i> Hapus
+                                                    <i class="bi bi-trash me-1"></i> Delete
                                                 </button>
                                             </form>
                                         </div>
@@ -123,7 +142,7 @@
                         </tbody>
                     </table>
                 </div>
-
+                {{ $profilAlumnis->links() }}  <!-- Menampilkan link pagination -->
             </div>
         </div>
     </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -32,19 +33,30 @@ class AuthController extends Controller
             return back()->withErrors($validator->errors())->withInput();
         }
 
+        // Cek apakah role 'murid' ada di database
+        $role = Role::where('nama_role', 'murid')->first();
+
+        // Jika role 'murid' tidak ditemukan, tampilkan pesan error
+        if (!$role) {
+            return back()->withErrors(['role' => 'Role "murid" tidak ditemukan!'])->withInput();
+        }
+
+        // Jika role ditemukan, lanjutkan registrasi
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role_id' => $role->id, // Gunakan ID role yang ditemukan
         ]);
 
+        // Login user setelah registrasi
         Auth::login($user);
 
         // Redirect berdasarkan role
         if (Auth::user()->isAdmin()) {
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->route('welcome');
+            return redirect()->route('user.dashboard');
         }
     }
 
@@ -59,7 +71,7 @@ class AuthController extends Controller
             if (Auth::user()->isAdmin()) {
                 return redirect()->route('admin.dashboard');
             } else {
-                return redirect()->route('welcome');
+                return redirect()->route('user.dashboard');
             }
         }
 

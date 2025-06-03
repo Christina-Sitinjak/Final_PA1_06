@@ -65,6 +65,25 @@
         .table-responsive {
             overflow-x: auto;
         }
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-item .page-link {
+    border-radius: 5px;
+    margin: 0 3px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
     </style>
 </head>
 <body>
@@ -87,7 +106,7 @@
                     <table class="table table-bordered">
                         <thead class="table-light">
                             <tr>
-                                <th>ID</th>
+                                <th>No</th>
                                 <th>Nama</th>
                                 <th>Gambar</th>
                                 <th>Nomor Telepon</th>
@@ -98,11 +117,11 @@
                         <tbody>
                             @foreach($pengajars as $pengajar)
                                 <tr>
-                                    <td>{{ $pengajar->pengajar_id }}</td>
+                                    <td>{{ ($pengajars->currentPage() - 1) * $pengajars->perPage() + $loop->iteration }}</td>
                                     <td>{{ $pengajar->nama_pengajar }}</td>
                                     <td>
                                         @if($pengajar->gambar)
-                                            <img src="{{ asset('storage/pengajars/' . $pengajar->gambar) }}" alt="{{ $pengajar->nama_pengajar }}">
+                                            <img src="{{ asset('storage/' . $pengajar->gambar) }}" alt="{{ $pengajar->nama_pengajar }}" style="max-width: 100px; max-height: 100px;">
                                         @else
                                             <span class="text-muted">No Image</span>
                                         @endif
@@ -118,7 +137,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-hapus">
-                                                    <i class="bi bi-trash me-1"></i> Hapus
+                                                    <i class="bi bi-trash me-1"></i> Delete
                                                 </button>
                                             </form>
                                         </div>
@@ -128,7 +147,7 @@
                         </tbody>
                     </table>
                 </div>
-
+                {{ $pengajars->links() }}  <!-- Menampilkan link pagination -->
             </div>
         </div>
     </div>
