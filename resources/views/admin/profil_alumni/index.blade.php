@@ -103,7 +103,7 @@
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Gambar</th>
+                                <th></th>
                                 <th>Tahun Lulus</th>
                                 <th>Deskripsi</th>
                                 <th>Aksi</th>
