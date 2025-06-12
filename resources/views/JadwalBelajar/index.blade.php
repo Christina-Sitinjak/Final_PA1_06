@@ -3,6 +3,7 @@
 
 <head>
     @include('layout.header')
+    <title>Jadwal Belajar</title>
 </head>
 
 <body>
@@ -14,44 +15,34 @@
         <h2 class="judul-jadwal">Jadwal Belajar</h2>
         <div class="jadwal-content">
             <table>
-                <tr>
-                    <th>PROGRAM</th>
-                    <th>Senin & Rabu</th>
-                    <th>Selasa & Kamis</th>
-                </tr>
-                <tr>
-                    <td>PRIMARY</td>
-                    <td>13.45 – 15.00</td>
-                    <td>13.45 – 15.00</td>
-                </tr>
-                <tr>
-                    <td>ELEMENTARY</td>
-                    <td>13.45 – 15.00</td>
-                    <td>13.45 – 15.00</td>
-                </tr>
-                <tr>
-                    <td>ADVANCE</td>
-                    <td>14.15 – 16.00</td>
-                    <td>14.15 – 16.00</td>
-                </tr>
-                <tr>
-                    <td>SPC</td>
-                    <td>15.00 – 17.30</td>
-                    <td>15.00 – 17.30</td>
-                </tr>
-
-                <tr class="private-class">
-                    <td colspan="3"><strong>Tersedia Juga Private Class</strong></td>
-                </tr>
-                <tr class="private-class">
-                    <td colspan="3"><strong>Jumat & Sabtu</strong></td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Kategori</th>
+                        <th>Program</th>
+                        <th>Hari</th>
+                        <th>Jam Mulai</th>
+                        <th>Jam Berakhir</th>
+                    </tr>
+                </thead>
+                    @forelse($jadwalBelajars as $jadwal)
+                        <tr>
+                            <td>{{ $jadwal->program->category->nama_kategori ?? 'Tidak Ada Kategori' }}</td>
+                            <td>{{ $jadwal->program->nama_program }}</td>
+                            <td>{{ $jadwal->hari }}</td>
+                            <td>{{ $jadwal->jam_mulai }}</td>
+                            <td>{{ $jadwal->jam_berakhir }}</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5">Tidak ada jadwal belajar yang tersedia.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
             </table>
         </div>
     </section>
 
     <style>
-
         .jadwal-content {
             max-width: 800px;
             margin: auto;

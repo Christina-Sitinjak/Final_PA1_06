@@ -142,43 +142,24 @@
     <!-- About section end -->
 
     <section id="sistem-belajar" class="sistem-belajar">
-        <h2 class="judul-kelas">Sistem Belajar</h2>
+        <h2 class="judul-sistem">Sistem Belajar</h2>
         <div class="sistem-belajar-container">
-            <div class="feature-card">
-                <i class="fas fa-sync-alt"></i> <!-- Icon: Sync -->
-                <strong>Pergantian program setiap 2 bulan:</strong>
-                <p>Pengajar berbahasa Inggris, siswa/i berbahasa Indonesia</p>
-                <p>Pengajar berbahasa Indonesia, siswa/i berbahasa Inggris</p>
-                <p>Pengajar dan siswa/i berbahasa Inggris</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-users"></i> <!-- Icon: Users -->
-                <strong>Praktek berbicara dengan orang asing:</strong>
-                <p>Dilaksanakan setiap 2 bulan sekali. Memberikan pengalaman nyata dan meningkatkan kepercayaan diri.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-graduation-cap"></i> <!-- Icon: Graduation Cap -->
-                <strong>Ujian Akhir:</strong>
-                <p>Berpidato di depan penguji dan orang tua. Menguji kemampuan dan kepercayaan diri.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-certificate"></i> <!-- Icon: Certificate -->
-                <strong>Sertifikat:</strong>
-                <p>Diberikan bagi siswa yang berhasil tamat. Sebagai bukti kemampuan dan prestasi.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-comments"></i> <!-- Icon: Comments -->
-                <strong>Diskusi terpadu:</strong>
-                <p>Diadakan di luar jam belajar. Memperdalam pemahaman dan mempererat hubungan antar siswa.</p>
-            </div>
+            @foreach($sistemBelajars as $item)
+                <div class="feature-card">
+                    @if($item->ikon)
+                        <i class="{{ $item->ikon }}"></i>
+                    @else
+                        <i class="fas fa-question-circle"></i> <!-- Ikon fallback jika tidak ada ikon -->
+                    @endif
+                    <strong>{{ $item->judul }}</strong>
+                    <p>{{ $item->deskripsi }}</p>
+                </div>
+            @endforeach
         </div>
-        </section>
-        <section id="kelas" class="kelas">
         <div style="text-align: center;">
-            <a href="{{ route('sistembelajar') }}" class="btn-lainnya">Sistem Belajar Lainnya</a>
+            <a href="{{ route('sistem_belajar') }}" class="btn-lainnya">Sistem Belajar Lainnya</a>
         </div>
         </section>
-
 
     <section id="kelas" class="kelas">
         <h2 class="judul-kelas">Daftar Kelas</h2>

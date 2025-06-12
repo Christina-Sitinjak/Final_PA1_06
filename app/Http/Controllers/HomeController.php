@@ -6,6 +6,7 @@ use App\Models\Program;
 use App\Models\Pengajar;
 use App\Models\Galeri;
 use App\Models\ProfilAlumni;
+use App\Models\SistemBelajar; // Tambahkan ini
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -21,7 +22,8 @@ class HomeController extends Controller
         $pengajars = Pengajar::limit(5)->get(); // Ambil 5 data pengajar pertama
         $galeris = Galeri::limit(5)->get(); // Ambil 5 data galeri pertama
         $profilAlumnis = ProfilAlumni::limit(5)->get();
+        $sistemBelajars = SistemBelajar::limit(5)->get(); // Ambil 5 data SistemBelajar pertama
 
-        return view('welcome', compact('pengajars','galeris','profilAlumnis','programs'));
+        return view('welcome', compact('pengajars','galeris','profilAlumnis','programs', 'sistemBelajars'));
     }
 }

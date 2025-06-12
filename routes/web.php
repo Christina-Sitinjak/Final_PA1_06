@@ -7,6 +7,8 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\SistemBelajarController;
+use App\Http\Controllers\JadwalBelajarController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\PengajarController;
 use App\Http\Controllers\ProfilAlumniController;
@@ -19,9 +21,6 @@ use App\Http\Controllers\DaftarPemesananController;
 use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('welcome');
-//Route::get('/', function () {return view('welcome');})->name('welcome');
-Route::get('/sistem-belajar', function () {return view('Sistem Belajar.index');})->name('sistembelajar');
-Route::get('/jadwal-belajar', function () {return view('Jadwal Belajar.index');})->name('jadwalbelajar');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('logins');
@@ -30,6 +29,12 @@ Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [AuthController::class, 'register'])->name('registers');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Rute public untuk menampilkan daftar Sistem Belajar
+Route::get('/sistem-belajar', [SistemBelajarController::class, 'showPublic'])->name('sistem_belajar');
+
+// Rute public untuk menampilkan daftar Jadwal Belajar
+Route::get('/jadwal-belajar', [JadwalBelajarController::class, 'showPublic'])->name('jadwal_belajar');
 
 // Rute public untuk menampilkan daftar kelas
 Route::get('/programs', [ProgramController::class, 'showPublic'])->name('program');
@@ -54,6 +59,16 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('admin.dashboard');
+
+    // CRUD Sistem Belajar
+    Route::get('/sistem-belajar', [SistemBelajarController::class, 'index'])->name('admin.sistem_belajar.index');
+    Route::get('/sistem-belajar/create', [SistemBelajarController::class, 'create'])->name('admin.sistem_belajar.create');
+    Route::post('/sistem-belajar', [SistemBelajarController::class, 'store'])->name('admin.sistem_belajar.store');
+    Route::get('/sistem-belajar/{sistem_belajar}', [SistemBelajarController::class, 'show'])->name('admin.sistem_belajar.show');
+    Route::get('/sistem-belajar/{sistem_belajar}/edit', [SistemBelajarController::class, 'edit'])->name('admin.sistem_belajar.edit');
+    Route::put('/sistem-belajar/{sistem_belajar}', [SistemBelajarController::class, 'update'])->name('admin.sistem_belajar.update');
+    Route::patch('/sistem-belajar/{sistem_belajar}', [SistemBelajarController::class, 'update']); // Optional, tergantung kebutuhan
+    Route::delete('/sistem-belajar/{sistem_belajar}', [SistemBelajarController::class, 'destroy'])->name('admin.sistem_belajar.destroy');
 
     // CRUD Galeri
     Route::get('/galeri', [GaleriController::class, 'index'])->name('admin.galeri.index');
@@ -94,6 +109,19 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
     Route::put('/pengumuman/{pengumuman}', [PengumumanController::class, 'update'])->name('admin.pengumuman.update');
     Route::patch('/pengumuman/{pengumuman}', [PengumumanController::class, 'update']);
     Route::delete('/pengumuman/{pengumuman}', [PengumumanController::class, 'destroy'])->name('admin.pengumuman.destroy');
+
+// CRUD Jadwal Belajar
+Route::get('/jadwal-belajar', [JadwalBelajarController::class, 'index'])->name('admin.jadwal_belajar.index');
+Route::get('/jadwal-belajar/create', [JadwalBelajarController::class, 'create'])->name('admin.jadwal_belajar.create');
+Route::post('/jadwal-belajar', [JadwalBelajarController::class, 'store'])->name('admin.jadwal_belajar.store');
+Route::get('/jadwal-belajar/{jadwal_belajar}', [JadwalBelajarController::class, 'show'])->name('admin.jadwal_belajar.show');
+Route::get('/jadwal-belajar/{jadwal_belajar}/edit', [JadwalBelajarController::class, 'edit'])->name('admin.jadwal_belajar.edit');
+Route::put('/jadwal-belajar/{jadwal_belajar}', [JadwalBelajarController::class, 'update'])->name('admin.jadwal_belajar.update');
+Route::patch('/jadwal-belajar/{jadwal_belajar}', [JadwalBelajarController::class, 'update']); // Optional, tergantung kebutuhan
+Route::delete('/jadwal-belajar/{jadwal_belajar}', [JadwalBelajarController::class, 'destroy'])->name('admin.jadwal_belajar.destroy');
+
+// Get Programs berdasarkan Category (AJAX)
+Route::get('/admin/jadwal-belajar/get-programs', [JadwalBelajarController::class, 'getPrograms'])->name('admin.jadwal_belajar.getPrograms');
 
     // CRUD Kategori
     Route::get('/kategori', [CategoryController::class, 'index'])->name('admin.kategori.index');

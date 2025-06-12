@@ -6,8 +6,8 @@
 
     <div class="navbar-nav">
         <a href="{{ route('welcome') }}" class="{{ request()->routeIs('welcome') ? 'active' : '' }}">Home</a>
-        <a href="{{ route('sistembelajar') }}" class="{{ request()->routeIs('sistembelajar') ? 'active' : '' }}">Sistem Belajar</a>
-        <a href="{{ route('jadwalbelajar') }}" class="{{ request()->routeIs('jadwalbelajar') ? 'active' : '' }}">Jadwal Belajar</a>
+        <a href="{{ route('sistem_belajar') }}" class="{{ request()->routeIs('sistem_belajar') ? 'active' : '' }}">Sistem Belajar</a>
+        <a href="{{ route('jadwal_belajar') }}" class="{{ request()->routeIs('jadwal_belajar') ? 'active' : '' }}">Jadwal Belajar</a>
         <a href="{{ route('program') }}" class="{{ request()->routeIs('program') ? 'active' : '' }}">Kelas</a>
         <a href="{{ route('pengajar') }}" class="{{ request()->routeIs('pengajar') ? 'active' : '' }}">Pengajar</a>
         <a href="{{ route('galeri') }}" class="{{ request()->routeIs('galeri') ? 'active' : '' }}">Galeri</a>

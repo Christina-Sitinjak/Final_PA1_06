@@ -28,6 +28,22 @@
                 </p>
             </a>
             <ul class="nav nav-treeview">
+                <!-- Sistem Belajar -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.sistem_belajar.index') }}" class="nav-link {{ request()->is('admin/sistem-belajar*') ? 'active' : '' }}">
+                        <i class="fas fa-book nav-icon"></i>
+                        <p>Sistem Belajar</p>
+                    </a>
+                </li>
+
+                <!-- Jadwal Belajar -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.jadwal_belajar.index') }}" class="nav-link {{ request()->is('admin/jadwal-belajar*') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-alt nav-icon"></i>
+                        <p>Jadwal Belajar</p>
+                    </a>
+                </li>
+
                 <!-- Kelas -->
                 <li class="nav-item">
                     <a href="{{ route('admin.program.index') }}" class="nav-link {{ request()->is('admin/program*') ? 'active' : '' }}">

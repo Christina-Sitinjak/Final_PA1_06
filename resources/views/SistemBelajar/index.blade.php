@@ -3,6 +3,8 @@
 
 <head>
     @include('layout.header')
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -16,49 +18,17 @@
     <section id="sistem-belajar" class="sistem-belajar">
         <h2 class="judul-sistem">Sistem Belajar</h2>
         <div class="sistem-belajar-container">
-            <div class="feature-card">
-                <i class="fas fa-sync-alt"></i> <!-- Icon: Sync -->
-                <strong>Pergantian program setiap 2 bulan:</strong>
-                <p>Pengajar berbahasa Inggris, siswa/i berbahasa Indonesia</p>
-                <p>Pengajar berbahasa Indonesia, siswa/i berbahasa Inggris</p>
-                <p>Pengajar dan siswa/i berbahasa Inggris</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-users"></i> <!-- Icon: Users -->
-                <strong>Praktek berbicara dengan orang asing:</strong>
-                <p>Dilaksanakan setiap 2 bulan sekali. Memberikan pengalaman nyata dan meningkatkan kepercayaan diri.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-graduation-cap"></i> <!-- Icon: Graduation Cap -->
-                <strong>Ujian Akhir:</strong>
-                <p>Berpidato di depan penguji dan orang tua. Menguji kemampuan dan kepercayaan diri.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-certificate"></i> <!-- Icon: Certificate -->
-                <strong>Sertifikat:</strong>
-                <p>Diberikan bagi siswa yang berhasil tamat. Sebagai bukti kemampuan dan prestasi.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-comments"></i> <!-- Icon: Comments -->
-                <strong>Diskusi terpadu:</strong>
-                <p>Diadakan di luar jam belajar. Memperdalam pemahaman dan mempererat hubungan antar siswa.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-chalkboard-teacher"></i> <!-- Icon: Chalkboard Teacher -->
-                <strong>Diklat lanjutan:</strong>
-                <p>Bagi yang tamat, berhak mengikuti pelatihan Asisten, Leader, dan Teacher. Meningkatkan kompetensi dan peluang karier.</p>
-            </div>
-            <!-- Tambahan Card -->
-            <div class="feature-card">
-                <i class="fas fa-book-open"></i> <!-- Icon: Book Open -->
-                <strong>Materi interaktif:</strong>
-                <p>Menggunakan buku, video, dan aplikasi. Membuat belajar lebih menyenangkan dan efektif.</p>
-            </div>
-            <div class="feature-card">
-                <i class="fas fa-globe"></i> <!-- Icon: Globe -->
-                <strong>Kurikulum global:</strong>
-                <p>Mengacu pada standar internasional. Mempersiapkan siswa menghadapi tantangan global.</p>
-            </div>
+            @foreach($sistemBelajars as $item)
+                <div class="feature-card">
+                    @if($item->ikon)
+                        <i class="{{ $item->ikon }}"></i>
+                    @else
+                        <i class="fas fa-question-circle"></i> <!-- Ikon fallback jika tidak ada ikon -->
+                    @endif
+                    <strong>{{ $item->judul }}</strong>
+                    <p>{{ $item->deskripsi }}</p>
+                </div>
+            @endforeach
         </div>
     </section>
 
@@ -108,14 +78,11 @@
     --shadow: rgba(0, 0, 0, 0.1);
 }
 
-/* Bagian utama section */
-
-
 /* Container kartu */
 
 .sistem-belajar-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Lebih responsif */
     gap: 25px;
     padding: 0 20px;
     justify-items: center;
@@ -132,6 +99,8 @@
     position: relative;
     overflow: hidden;
     animation: fadeInUp 0.6s ease both;
+    width: 100%; /* Lebar 100% agar responsif di dalam grid */
+    box-sizing: border-box; /* Pastikan padding dan border tidak menambah lebar elemen */
 }
 
 .feature-card i {
